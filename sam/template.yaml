@@ -1,0 +1,78 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  lambda-sourcemaps
+
+Globals:
+  Function:
+    Architectures:
+      - arm64
+    Environment:
+      Variables:
+        NODE_OPTIONS: '--enable-source-maps'
+        TABLE_NAME: !Ref DynamoDBTable
+    Runtime: nodejs14.x
+    Timeout: 60
+
+Resources:
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+  ListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/list
+      Handler: index.handler
+      Events:
+        List:
+          Type: HttpApi
+          Properties:
+            Path: /
+            Method: get
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref DynamoDBTable
+  CreateFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/create
+      Handler: index.handler
+      Events:
+        Create:
+          Type: HttpApi
+          Properties:
+            Path: /
+            Method: post
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref DynamoDBTable
+  DeleteFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/delete
+      Handler: index.handler
+      Events:
+        Create:
+          Type: HttpApi
+          Properties:
+            Path: /
+            Method: delete
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref DynamoDBTable
+
+Outputs:
+  ListApi:
+    Description: 'API Gateway endpoint URL for default stage for List function'
+    Value: !Sub 'https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/'

@@ -1,0 +1,37 @@
+{
+  "name": "lambda-sourcemaps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:lambda": "npm run clean && ts-node --files sam/esbuild.ts",
+    "clean": "rimraf cdk.out sam/build",
+    "deploy:cdk": "npm run clean && npx cdk deploy --require-approval never",
+    "deploy:sam": "npm run build:lambda && sam deploy --template sam/template.yaml",
+    "deploy:sls": "sls deploy",
+    "destroy:cdk": "npm run clean && npx cdk destroy --force",
+    "destroy:sam": "sam delete",
+    "destroy:sls": "sls remove",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.89",
+    "@types/node": "10.17.27",
+    "aws-cdk": "2.8.0",
+    "esbuild": "^0.14.11",
+    "rimraf": "^3.0.2",
+    "serverless-esbuild": "^1.23.3",
+    "ts-node": "^9.0.0",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-apigatewayv2-alpha": "^2.8.0-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.8.0-alpha.0",
+    "@aws-sdk/client-dynamodb": "^3.47.0",
+    "@aws-sdk/lib-dynamodb": "^3.47.0",
+    "aws-cdk-lib": "2.8.0",
+    "constructs": "^10.0.37"
+  }
+}

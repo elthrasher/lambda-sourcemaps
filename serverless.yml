@@ -1,0 +1,70 @@
+service: sls-lambda-sourcemaps
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  lambdaHashingVersion: 20201221
+  runtime: nodejs14.x
+  environment:
+    NODE_OPTIONS: '--enable-source-maps'
+    TABLE_NAME: ${self:service}-${sls:stage}
+  httpApi: {}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: 'arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.TABLE_NAME}'
+
+functions:
+  create:
+    handler: fns/create.handler
+    events:
+      - httpApi:
+          method: post
+          path: /
+  delete:
+    handler: fns/delete.handler
+    events:
+      - httpApi:
+          method: delete
+          path: /
+  list:
+    handler: fns/list.handler
+    events:
+      - httpApi:
+          method: get
+          path: /
+
+resources:
+  Resources:
+    DynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: sk
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: sk
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.TABLE_NAME}
+
+plugins:
+  - serverless-esbuild
+
+custom:
+  esbuild:
+    bundle: true
+    minify: true
+    sourcemap: true
