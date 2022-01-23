@@ -5,10 +5,10 @@
 
 Tests are run immediately after a deploy, so will include cold starts (~100 per test)
 
-## Not minified, no sourcemaps
+## Not minified, no Source Map
 
 ┌─────────────┬────────────────┬─────────────────┐
-│ Bundle Size │ SourceMap Size │ Function Memory │
+│ Bundle Size │ Source Map Size │ Function Memory │
 ├─────────────┼────────────────┼─────────────────┤
 │ 1.2MB       │ N/A            │ 512 MB          │
 └─────────────┴────────────────┴─────────────────┘
@@ -38,10 +38,10 @@ Req/Bytes counts sampled once per second.
 63k requests in 30.07s, 13.3 MB read
 ```
 
-## Minified, no sourcemaps
+## Minified, no Source Map
 
 ┌─────────────┬────────────────┬─────────────────┐
-│ Bundle Size │ SourceMap Size │ Function Memory │
+│ Bundle Size │ Source Map Size │ Function Memory │
 ├─────────────┼────────────────┼─────────────────┤
 │ 534.8kb     │ N/A            │ 512 MB          │
 └─────────────┴────────────────┴─────────────────┘
@@ -71,10 +71,10 @@ Req/Bytes counts sampled once per second.
 62k requests in 30.06s, 13.1 MB read
 ```
 
-## Minified with sourcemaps
+## Minified with Source Map
 
 ┌─────────────┬────────────────┬─────────────────┐
-│ Bundle Size │ SourceMap Size │ Function Memory │
+│ Bundle Size │ Source Map Size │ Function Memory │
 ├─────────────┼────────────────┼─────────────────┤
 │ 534.8kb     │ 1.5MB          │ 512 MB          │
 └─────────────┴────────────────┴─────────────────┘
@@ -104,7 +104,7 @@ Req/Bytes counts sampled once per second.
 64k requests in 30.07s, 13.5 MB read
 ```
 
-## Error minified without sourcemaps
+## Error minified without Source Map
 
 ```bash
 % autocannon -c 100 -d 30 https://xcnt6h5ywd.execute-api.us-east-1.amazonaws.com/
@@ -130,7 +130,7 @@ Req/Bytes counts sampled once per second.
 78k requests in 30.07s, 17.3 MB read
 ```
 
-## Error minified with sourcemaps
+## Error minified with Source Map
 
 ```bash
 % autocannon -c 100 -d 30 https://xcnt6h5ywd.execute-api.us-east-1.amazonaws.com/
