@@ -52,7 +52,8 @@ export class SourceMapsStack extends Stack {
       entry: `${__dirname}/../fns/list.ts`,
     });
 
-    table.grantReadWriteData(createFn);
+    // Wrong permissions are applied here!
+    table.grantWriteData(createFn);
     table.grantWriteData(deleteFn);
     table.grantReadData(listFn);
 

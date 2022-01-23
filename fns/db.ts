@@ -19,6 +19,7 @@ export interface MyItem {
 }
 
 export const deleteItem = (pk: string, sk: string) => {
+  // Keys are mapped wrong!
   const command = new DeleteCommand({ Key: { PK: pk, SK: sk }, TableName });
   return client.send(command);
 };
@@ -34,6 +35,8 @@ export const putItem = (item: MyItem) => {
 };
 
 export const scanTable = () => {
+  // Function will fail here!
+  JSON.parse('{');
   const command = new ScanCommand({
     TableName,
   });
