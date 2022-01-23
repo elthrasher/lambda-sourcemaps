@@ -1,4 +1,4 @@
-import { build, BuildOptions, BuildResult, serve, ServeResult } from 'esbuild';
+import { build, BuildOptions } from 'esbuild';
 
 const buildOptions: BuildOptions = {
   bundle: true,

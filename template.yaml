@@ -32,7 +32,7 @@ Resources:
   ListFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/list
+      CodeUri: sam/build/list
       Handler: index.handler
       Events:
         List:
@@ -46,7 +46,7 @@ Resources:
   CreateFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/create
+      CodeUri: sam/build/create
       Handler: index.handler
       Events:
         Create:
@@ -60,7 +60,7 @@ Resources:
   DeleteFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/delete
+      CodeUri: sam/build/delete
       Handler: index.handler
       Events:
         Create:

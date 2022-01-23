@@ -7,7 +7,7 @@
     "build:lambda": "npm run clean && ts-node --files sam/esbuild.ts",
     "clean": "rimraf cdk.out sam/build",
     "deploy:cdk": "npm run clean && npx cdk deploy --require-approval never",
-    "deploy:sam": "npm run build:lambda && sam deploy --template sam/template.yaml",
+    "deploy:sam": "npm run build:lambda && sam deploy --template template.yaml",
     "deploy:sls": "sls deploy",
     "destroy:cdk": "npm run clean && npx cdk destroy --force",
     "destroy:sam": "sam delete",
